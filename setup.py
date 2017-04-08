@@ -6,10 +6,19 @@ import numpy
 ext_modules = [
     Extension('ffm', ['fastFM/ffm.pyx'],
               libraries=['m', 'fastfm'],
-              library_dirs=['fastFM/', 'fastFM-core/bin/'],
+              library_dirs=['fastFM/', 'fastFM-core/bin/',
+                            '../fastFM2/build/Release/'],
               include_dirs=['fastFM/', 'fastFM-core/include/',
                             'fastFM-core/externals/CXSparse/Include/',
-              numpy.get_include()])]
+                            numpy.get_include()]),
+    Extension('ffm2', ['fastFM/ffm2.pyx'],
+              libraries=['fastFM'],
+              library_dirs=['fastFM/', '../fastFM2/build/Release/'],
+              include_dirs=['fastFM/', '../fastFM2/fastFM/',
+                            numpy.get_include()],
+              extra_compile_args=["-std=c++11"],
+              extra_link_args=["-std=c++11"],
+              language="c++")]
 
 setup(
     name='fastFM',
